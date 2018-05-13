@@ -3,6 +3,7 @@
 #include <QKeyEvent>
 #include <QtDebug>
 #include <QTimer>
+#include <QDesktopWidget>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->targetY = 400;
     QTimer::singleShot(1000, this, MainWindow::update);
     QTimer::singleShot(1000, this, MainWindow::movePlayerTwo);
+    QTimer::singleShot(1000, this, MainWindow::movePlayerOne);
 }
 
 MainWindow::~MainWindow()
@@ -38,9 +40,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
     }
 
-    if( event->key() == Qt::Key_Up && ui->playerOne->pos().y() > 20)
+    if( event->key() == Qt::Key_Up)
     {
-        if(!isPaused){
+        if(!isPaused && ui->playerOne->pos().y() > 20){
             ui->playerOne->move(ui->playerOne->pos().x(),ui->playerOne->pos().y() - 20);
         }
     }
@@ -78,6 +80,25 @@ void MainWindow::update()
     if(!isPaused){
         QTimer::singleShot(50, this, MainWindow::update);
     }
+}
+
+void MainWindow::movePlayerOne()
+{
+    QPoint globalCursorPos = QCursor::pos();
+    int mouseScreen = qApp->desktop()->screenNumber(globalCursorPos);
+    QRect mouseScreenGeometry = qApp->desktop()->screen(mouseScreen)->geometry();
+    QPoint localCursorPos = mapFromGlobal(globalCursorPos - mouseScreenGeometry.topLeft());
+    if (localCursorPos.y() > -30 && localCursorPos.y() < 520  ) {
+        if(localCursorPos.y() < ui->playerOne->pos().y() && ui->playerOne->pos().y() > 20){
+            ui->playerOne->move(ui->playerOne->pos().x(),ui->playerOne->pos().y() - 20);
+        }
+
+        if(localCursorPos.y() > ui->playerOne->pos().y() && ui->playerOne->pos().y() < 410){
+            ui->playerOne->move(ui->playerOne->pos().x(),ui->playerOne->pos().y() + 20);
+        }
+    }
+    QTimer::singleShot(50, this, MainWindow::movePlayerOne);
+
 }
 
 void MainWindow::movePlayerTwo()

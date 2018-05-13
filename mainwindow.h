@@ -33,6 +33,7 @@ private:
     void bounceToOtherSide();
     void addScore();
     void movePlayerTwo();
+    void movePlayerOne();
 };
 
 #endif // MAINWINDOW_H
