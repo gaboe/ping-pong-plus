@@ -27,6 +27,7 @@ private:
     int playerOneScore;
     int playerTwoScore;
     bool isOnPlayerSide;
+    bool isPaused;
     void resetBallPosition();
     bool isOnPlayerBoundary();
     void bounceToOtherSide();

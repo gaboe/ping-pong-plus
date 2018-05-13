@@ -16,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->playerOneScore->display(playerOneScore);
     ui->playerOneScore->display(playerOneScore);
 
+    isPaused = false;
+
     resetBallPosition();
     this->targetY = 400;
     QTimer::singleShot(1000, this, MainWindow::update);
@@ -30,12 +32,16 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if( event->key() == Qt::Key_Down )
     {
-        ui->playerOne->move(ui->playerOne->pos().x(),ui->playerOne->pos().y() + 20);
+        if(!isPaused){
+            ui->playerOne->move(ui->playerOne->pos().x(),ui->playerOne->pos().y() + 20);
+        }
     }
 
     if( event->key() == Qt::Key_Up )
     {
-        ui->playerOne->move(ui->playerOne->pos().x(),ui->playerOne->pos().y() - 20);
+        if(!isPaused){
+            ui->playerOne->move(ui->playerOne->pos().x(),ui->playerOne->pos().y() - 20);
+        }
     }
 
     if(event->key() == Qt::Key_Escape){
@@ -44,6 +50,13 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         playerTwoScore = 0;
         ui->playerOneScore->display(0);
         ui->playerTwoScore->display(0);
+    }
+
+    if(event->key() == Qt::Key_P){
+        isPaused = !isPaused;
+        if(!isPaused){
+            QTimer::singleShot(50, this, MainWindow::update);
+        }
     }
 }
 
@@ -60,7 +73,9 @@ void MainWindow::update()
 
 
     MainWindow::moveToPosition();
-    QTimer::singleShot(50, this, MainWindow::update);
+    if(!isPaused){
+        QTimer::singleShot(50, this, MainWindow::update);
+    }
 }
 
 
