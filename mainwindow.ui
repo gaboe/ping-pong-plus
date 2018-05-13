@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="Line" name="line">
+   <widget class="Line" name="middle">
     <property name="geometry">
      <rect>
       <x>453</x>
@@ -88,7 +88,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="Line" name="line_2">
+   <widget class="Line" name="ball">
     <property name="geometry">
      <rect>
       <x>170</x>

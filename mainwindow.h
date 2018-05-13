@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
 
 namespace Ui {
 class MainWindow;
@@ -16,8 +17,17 @@ public:
     ~MainWindow();
     void keyPressEvent(QKeyEvent *event);
 
+    void update();
+    void moveToPosition();
+    bool isOnPlayerPad();
 private:
     Ui::MainWindow *ui;
+    int targetX;
+    int targetY;
+    bool isOnPlayerSide;
+    void resetBallPosition();
+    bool isOnPlayerBoundary();
+    void bounceToOtherSide();
 };
 
 #endif // MAINWINDOW_H
