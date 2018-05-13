@@ -32,6 +32,7 @@ private:
     bool isOnPlayerBoundary();
     void bounceToOtherSide();
     void addScore();
+    void movePlayerTwo();
 };
 
 #endif // MAINWINDOW_H

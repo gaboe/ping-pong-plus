@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     resetBallPosition();
     this->targetY = 400;
     QTimer::singleShot(1000, this, MainWindow::update);
+    QTimer::singleShot(1000, this, MainWindow::movePlayerTwo);
 }
 
 MainWindow::~MainWindow()
@@ -56,6 +57,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         isPaused = !isPaused;
         if(!isPaused){
             QTimer::singleShot(50, this, MainWindow::update);
+            QTimer::singleShot(1000, this, MainWindow::movePlayerTwo);
         }
     }
 }
@@ -78,6 +80,19 @@ void MainWindow::update()
     }
 }
 
+void MainWindow::movePlayerTwo()
+{
+    if(!isPaused){
+        auto rise = this->targetY - ui->playerTwo->pos().y();
+        auto distance = sqrt(rise * rise);
+        auto velY = (rise / distance) * 1;
+        if(abs(velY) >= 0.1){
+            ui->playerTwo->move(ui->playerTwo->pos().x(), ui->playerTwo->pos().y() + velY);
+        }
+        QTimer::singleShot(50, this, MainWindow::movePlayerTwo);
+    }
+
+}
 
 void MainWindow::addScore(){
     if(isOnPlayerSide){
@@ -93,13 +108,13 @@ void MainWindow::addScore(){
 void MainWindow::bounceToOtherSide(){
     isOnPlayerSide = !isOnPlayerSide;
     targetX = isOnPlayerSide ? ui->playerOne->pos().x() + 12 : ui->playerTwo->pos().x() - 12;
-    targetY = rand() % 150;
+    targetY = rand() % 400;
 }
 
 void MainWindow::resetBallPosition(){
-    isOnPlayerSide = true; // 0 == rand() % 2;
+    isOnPlayerSide = 0 == rand() % 2;
     targetX = isOnPlayerSide ? ui->playerOne->pos().x() + 12 : ui->playerTwo->pos().x() - 12;
-    targetY = rand() % 150;
+    targetY = rand() % 400;
     ui->ball->move(ui->middle->pos().x(),ui->middle->pos().y());
 }
 
@@ -126,7 +141,7 @@ bool MainWindow::isOnPlayerPad(){
         return false;
     }
     if(this->ui->playerTwo->pos().x() - ui->ball->pos().x()  < 20 &&
-            this->ui->playerTwo->pos().y() - ui->ball->pos().y() < 20
+            abs(ui->ball->pos().y() - (this->ui->playerTwo->pos().y() + 30)) < 55
             ){
         return true;
     }
