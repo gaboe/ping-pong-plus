@@ -24,10 +24,13 @@ private:
     Ui::MainWindow *ui;
     int targetX;
     int targetY;
+    int playerOneScore;
+    int playerTwoScore;
     bool isOnPlayerSide;
     void resetBallPosition();
     bool isOnPlayerBoundary();
     void bounceToOtherSide();
+    void addScore();
 };
 
 #endif // MAINWINDOW_H

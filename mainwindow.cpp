@@ -10,6 +10,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     srand(time(0));
     ui->setupUi(this);
+
+    playerOneScore = 0;
+    playerTwoScore = 0;
+    ui->playerOneScore->display(playerOneScore);
+    ui->playerOneScore->display(playerOneScore);
+
     resetBallPosition();
     this->targetY = 400;
     QTimer::singleShot(1000, this, MainWindow::update);
@@ -31,13 +37,23 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     {
         ui->playerOne->move(ui->playerOne->pos().x(),ui->playerOne->pos().y() - 20);
     }
+
+    if(event->key() == Qt::Key_Escape){
+        resetBallPosition();
+        playerOneScore = 0;
+        playerTwoScore = 0;
+        ui->playerOneScore->display(0);
+        ui->playerTwoScore->display(0);
+    }
 }
 
 void MainWindow::update()
 {
 
     if(isOnPlayerBoundary() && !isOnPlayerPad()){
+        addScore();
         resetBallPosition();
+
     }else if(isOnPlayerPad()){
         bounceToOtherSide();
     }
@@ -45,6 +61,18 @@ void MainWindow::update()
 
     MainWindow::moveToPosition();
     QTimer::singleShot(50, this, MainWindow::update);
+}
+
+
+void MainWindow::addScore(){
+    if(isOnPlayerSide){
+        playerOneScore++;
+        ui->playerTwoScore->display(playerOneScore);
+    }
+    else{
+        playerTwoScore++;
+        ui->playerOneScore->display(playerTwoScore);
+    }
 }
 
 void MainWindow::bounceToOtherSide(){
@@ -94,8 +122,8 @@ void MainWindow::moveToPosition(){
     auto run = this->targetX - ui->ball->pos().x();
     auto rise = this->targetY - ui->ball->pos().y();
     auto distance = sqrt(run * run + rise * rise);
-    auto velX = (run / distance) * 10;
-    auto velY = (rise / distance) * 10;
+    auto velX = (run / distance) * 15;
+    auto velY = (rise / distance) * 15;
 
     ui->ball->move(ui->ball->pos().x() + velX, ui->ball->pos().y() + velY);
 }
