@@ -33,12 +33,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if( event->key() == Qt::Key_Down )
     {
-        if(!isPaused){
+        if(!isPaused && ui->playerOne->pos().y() < 410){
             ui->playerOne->move(ui->playerOne->pos().x(),ui->playerOne->pos().y() + 20);
         }
     }
 
-    if( event->key() == Qt::Key_Up )
+    if( event->key() == Qt::Key_Up && ui->playerOne->pos().y() > 20)
     {
         if(!isPaused){
             ui->playerOne->move(ui->playerOne->pos().x(),ui->playerOne->pos().y() - 20);
