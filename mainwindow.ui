@@ -17,7 +17,7 @@
    <widget class="Line" name="middle">
     <property name="geometry">
      <rect>
-      <x>453</x>
+      <x>440</x>
       <y>0</y>
       <width>51</width>
       <height>491</height>
@@ -483,6 +483,60 @@
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="legend1">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>40</y>
+      <width>421</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Use mouse to move pad</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="legend2">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>100</y>
+      <width>421</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Press P to Pause</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="legend3">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>170</y>
+      <width>421</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Press Esc to Reset</string>
     </property>
    </widget>
   </widget>

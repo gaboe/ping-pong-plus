@@ -34,6 +34,7 @@ private:
     void addScore();
     void movePlayerTwo();
     void movePlayerOne();
+    void startGame();
 };
 
 #endif // MAINWINDOW_H

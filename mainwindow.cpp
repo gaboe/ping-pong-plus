@@ -21,9 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     resetBallPosition();
     this->targetY = 400;
-    QTimer::singleShot(1000, this, MainWindow::update);
-    QTimer::singleShot(1000, this, MainWindow::movePlayerTwo);
-    QTimer::singleShot(1000, this, MainWindow::movePlayerOne);
+    QTimer::singleShot(5000, this, MainWindow::startGame);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -33,20 +33,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-    if( event->key() == Qt::Key_Down )
-    {
-        if(!isPaused && ui->playerOne->pos().y() < 410){
-            ui->playerOne->move(ui->playerOne->pos().x(),ui->playerOne->pos().y() + 20);
-        }
-    }
-
-    if( event->key() == Qt::Key_Up)
-    {
-        if(!isPaused && ui->playerOne->pos().y() > 20){
-            ui->playerOne->move(ui->playerOne->pos().x(),ui->playerOne->pos().y() - 20);
-        }
-    }
-
     if(event->key() == Qt::Key_Escape){
         resetBallPosition();
         playerOneScore = 0;
@@ -58,8 +44,16 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_P){
         isPaused = !isPaused;
         if(!isPaused){
+            ui->legend1->hide();
+            ui->legend2->hide();
+            ui->legend3->hide();
             QTimer::singleShot(50, this, MainWindow::update);
             QTimer::singleShot(1000, this, MainWindow::movePlayerTwo);
+        }
+        else{
+            ui->legend1->show();
+            ui->legend2->show();
+            ui->legend3->show();
         }
     }
 }
@@ -101,6 +95,7 @@ void MainWindow::movePlayerOne()
 
 }
 
+
 void MainWindow::movePlayerTwo()
 {
     if(!isPaused){
@@ -112,6 +107,17 @@ void MainWindow::movePlayerTwo()
         }
         QTimer::singleShot(50, this, MainWindow::movePlayerTwo);
     }
+
+}
+
+void MainWindow::startGame()
+{
+    ui->legend1->hide();
+    ui->legend2->hide();
+    ui->legend3->hide();
+    QTimer::singleShot(1000, this, MainWindow::update);
+    QTimer::singleShot(1000, this, MainWindow::movePlayerTwo);
+    QTimer::singleShot(1000, this, MainWindow::movePlayerOne);
 
 }
 
